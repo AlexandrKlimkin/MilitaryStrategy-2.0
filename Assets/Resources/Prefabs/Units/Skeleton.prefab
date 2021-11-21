@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ee4d83a7455c44eb387ac2bec11ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHealth: 100
+  _MaxHealth: 80
   TeamIndex: 0
 --- !u!114 &114912036087267460
 MonoBehaviour:
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6183f326610db4c8a143c61dbcb60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3.5
+  Speed: 3
   AngularSpeed: 10
   MiddleDmgStanTime: 1
 --- !u!114 &114392807935339492
@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0008a4d43454d964fb98d0a7f1056d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 12
+  Range: 120
 --- !u!114 &114822690471539726
 MonoBehaviour:
   m_ObjectHideFlags: 0

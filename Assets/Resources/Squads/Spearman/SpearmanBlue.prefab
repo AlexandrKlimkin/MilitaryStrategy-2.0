@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ee4d83a7455c44eb387ac2bec11ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHealth: 150
+  _MaxHealth: 80
   TeamIndex: 1
 --- !u!114 &3803269827764984946
 MonoBehaviour:
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0008a4d43454d964fb98d0a7f1056d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 150
+  Range: 15
 --- !u!114 &2071616152829739779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +276,10 @@ PrefabInstance:
       value: WK_singlemesh_spearman
       objectReference: {fileID: 0}
     - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -288,6 +292,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -297,14 +305,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400058, guid: 8318d8e881ca6314f998516c6b71e721, type: 3}

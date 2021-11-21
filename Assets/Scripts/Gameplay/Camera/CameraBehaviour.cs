@@ -6,11 +6,6 @@ public interface ICameraTarget {
 }
 
 public class CameraBehaviour : SingletonBehaviour<CameraBehaviour> {
-
-    [SerializeField]
-    private float _DefaultHeight;
-    [SerializeField]
-    private float _DefaultDistance;
     [SerializeField]
     private float _TargetAngleX;
     [SerializeField]
