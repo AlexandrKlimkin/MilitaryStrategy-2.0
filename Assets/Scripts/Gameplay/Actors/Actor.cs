@@ -77,7 +77,7 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
         if (OnDeath != null)
             OnDeath();
         if(Animator != null)
-            Animator.SetBool("Dead", true);
+            Animator.SetTrigger("Die");
     }
 
     protected virtual void OnSmallDamageTake() {

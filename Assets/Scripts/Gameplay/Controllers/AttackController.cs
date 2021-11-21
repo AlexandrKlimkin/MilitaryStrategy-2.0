@@ -97,4 +97,10 @@ public class AttackController : MonoBehaviour {
     private void OnDestroy() {
         Owner.OnDeath -= OnOwnerDeath;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Range);
+    }
 }
