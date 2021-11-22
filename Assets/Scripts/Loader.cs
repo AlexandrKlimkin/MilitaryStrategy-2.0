@@ -1,6 +1,6 @@
 ﻿using System;
 using Leopotam.Ecs;
-using Movement;
+using Units;
 using UnityEngine;
 
 namespace DefaultNamespace
