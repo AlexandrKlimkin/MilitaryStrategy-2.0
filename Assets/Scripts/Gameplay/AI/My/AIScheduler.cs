@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 
 
-public class AIScheduler : Scheduler<AIScheduler, AIController> {
-
+public class AIScheduler : Scheduler<AIScheduler, AIController>
+{
+    public float UnitsPerFrame;
+    
     protected override bool MaintainConstantLoadAmmount { get { return true; } }
 
     protected override float ObjectsPerFrame {
         get {
-            return 100f; // TODO: Enable Scheduler only after game start
+            return UnitsPerFrame; // TODO: Enable Scheduler only after game start
         }
     }
 

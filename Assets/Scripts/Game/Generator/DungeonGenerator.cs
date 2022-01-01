@@ -39,7 +39,7 @@ namespace DungeonGeneration {
             var root = new GameObject("Rooms");
             root.transform.SetParent(transform);
             _Root = root.transform;
-            EditorCoroutine.Start(CreateRoomsRoutine());
+            // EditorCoroutine.Start(CreateRoomsRoutine());
         }
 
         public void ClearDungeon() {
@@ -94,7 +94,7 @@ namespace DungeonGeneration {
                 //_MinZ = Mathf.Min(_MinZ, rightDown.z);
                 yield return null;
             }
-            EditorCoroutine.Start(SeparateRooms());
+            // EditorCoroutine.Start(SeparateRooms());
         }
 
         private IEnumerator SeparateRooms() {
@@ -177,26 +177,26 @@ namespace DungeonGeneration {
             }
         }
 
-        private void OnDrawGizmos() {
-            if (_Rooms == null)
-                return;
-            foreach (var room in _Rooms) {
-                var leftUp = room.LeftUpVert();
-                var rightDown = room.RightDownVert();
-                var leftDown = new Vector3(leftUp.x, 0, rightDown.z);
-                var rightUp = new Vector3(rightDown.x, 0, leftUp.z);
-                Handles.DrawSolidRectangleWithOutline(new Vector3[] {leftDown, leftUp, rightUp, rightDown}, new Color(0,0,0.5f,0.5f), new Color(0, 0, 1f, 1f));
-            }
-            Handles.color = Color.green;
-            if (_Triangles != null && _BigRooms.Count > 2) {
-                foreach (var triangle in _Triangles) {
-                    Handles.DrawPolyLine(new Vector3[] { _BigRooms[triangle.a].Position, _BigRooms[triangle.b].Position, _BigRooms[triangle.c].Position });
-                }
-            }
-            Handles.color = Color.red;
-            foreach(var room in _BigRooms) {
-                Handles.DrawSolidDisc(room.Position, Vector3.up, 0.5f);
-            }
-        }
+        // private void OnDrawGizmos() {
+        //     if (_Rooms == null)
+        //         return;
+        //     foreach (var room in _Rooms) {
+        //         var leftUp = room.LeftUpVert();
+        //         var rightDown = room.RightDownVert();
+        //         var leftDown = new Vector3(leftUp.x, 0, rightDown.z);
+        //         var rightUp = new Vector3(rightDown.x, 0, leftUp.z);
+        //         Handles.DrawSolidRectangleWithOutline(new Vector3[] {leftDown, leftUp, rightUp, rightDown}, new Color(0,0,0.5f,0.5f), new Color(0, 0, 1f, 1f));
+        //     }
+        //     Handles.color = Color.green;
+        //     if (_Triangles != null && _BigRooms.Count > 2) {
+        //         foreach (var triangle in _Triangles) {
+        //             Handles.DrawPolyLine(new Vector3[] { _BigRooms[triangle.a].Position, _BigRooms[triangle.b].Position, _BigRooms[triangle.c].Position });
+        //         }
+        //     }
+        //     Handles.color = Color.red;
+        //     foreach(var room in _BigRooms) {
+        //         Handles.DrawSolidDisc(room.Position, Vector3.up, 0.5f);
+        //     }
+        // }
     }
 }

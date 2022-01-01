@@ -122,7 +122,7 @@ public class MoveController : MonoBehaviour {
     }
 
     public void UpdateAnimator() {
-        Owner.Animator.SetBool("Moving", IsMoving);
+        // Owner.Animator.SetBool("Moving", IsMoving);
     }
 
     private void OnOwnerDeath() {

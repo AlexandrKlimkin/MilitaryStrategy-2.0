@@ -54,7 +54,7 @@ public class AttackController : MonoBehaviour {
             return;
         if (Weapon.Reloaded) {
             Weapon.Attack();
-            Owner.Animator.SetTrigger("Attack");
+            // Owner.Animator.SetTrigger("Attack");
         }
     }
 

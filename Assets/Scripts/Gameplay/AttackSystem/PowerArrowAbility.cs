@@ -22,7 +22,7 @@ public class PowerArrowAbility : Ability
     {
         MoveController.IsStopped = true;
         MoveController.ForceLookAt(Direction);
-        Owner.Animator.SetTrigger("Attack");
+        // Owner.Animator.SetTrigger("Attack");
         SpawnProjectile();
     }
 

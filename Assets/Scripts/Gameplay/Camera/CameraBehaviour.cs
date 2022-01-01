@@ -35,7 +35,7 @@ public class CameraBehaviour : SingletonBehaviour<CameraBehaviour> {
     private bool _NoDampingUpdate;
 
     void Start() {
-        Target = PlayerController.Instance.Unit;
+        Target = PlayerController.Instance?.Unit;
         InputSystem.Instance.RotateCameraLeft += RotateLeftAroundTarget;
         InputSystem.Instance.RotateCameraRight += RotateRightAroundTarget;
         InputSystem.Instance.MouseScroll += ScrollToTarget;
