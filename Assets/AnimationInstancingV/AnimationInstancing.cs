@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Linq;
 using Unity.IL2CPP.CompilerServices;
 
 namespace AnimationInstancing
@@ -86,6 +87,8 @@ namespace AnimationInstancing
         [NonSerialized]
         private List<AnimationInstancing> listAttachment;
 
+        [SerializeField] 
+        private AnimationInfoContainer AnimationInfoContainer;
         
         
         public bool FireEvents { get; set; } = true;
@@ -258,12 +261,12 @@ namespace AnimationInstancing
                     bonePerVertex);
                 return true;
             }
-
+            
 			AnimationManager.InstanceAnimationInfo info = AnimationManager.Instance.FindAnimationInfo(prototype, this);
-            if (info != null)
+            if (AnimationInfoContainer != null)
             {
-                aniInfo = info.listAniInfo;
-                Prepare(aniInfo, info.extraBoneInfo);
+                aniInfo = AnimationInfoContainer.AnimationInfos;
+                Prepare(aniInfo, AnimationInfoContainer.ExtraBoneInfo);
             }
             searchInfo = new AnimationInfo();
             comparer = new ComparerHash();
@@ -545,7 +548,7 @@ namespace AnimationInstancing
             AnimationInfo info = GetCurrentAnimationInfo();
             if (info == null)
                 return;
-            if (info.eventList.Count == 0)
+            if (info.eventList == null || info.eventList.Count == 0)
                 return;
 
             if (aniEvent == null)
