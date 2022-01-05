@@ -31,11 +31,11 @@ public class MoveController : MonoBehaviour {
 
     public bool Staned { get; private set; }
 
-    public bool IsMoving {
-        get {
-            return CanMove && !IsStopped && Velocity != Vector3.zero; 
-        }
-    }
+    public bool IsMoving =>
+        //return _IsMoving;
+        CanMove && !IsStopped && Velocity != Vector3.zero;
+
+    // public bool _IsMoving;
 
     private void Awake() {
         Owner = GetComponentInParent<Unit>();

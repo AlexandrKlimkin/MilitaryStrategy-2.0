@@ -45,7 +45,7 @@ namespace AnimationInstancing
         public bool applyRootMotion = false;
         [Range(1, 4)]
         public int bonePerVertex = 4;
-        [NonSerialized]
+        // [NonSerialized]
         public float curFrame;
         [NonSerialized]
         public float preAniFrame;
@@ -190,14 +190,14 @@ namespace AnimationInstancing
             foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>()) {
                 Destroy(skinnedMeshRenderer.gameObject); 
             }
-            for (var i = 0; i < transform.childCount; i++) {
-                var child = transform.GetChild(i);
-                //if (child.name == "Armature") {
-                if (i == 0) {
-                    Destroy(child.gameObject);
-                    break;
-                }
-            }
+            // for (var i = 0; i < transform.childCount; i++) {
+            //     var child = transform.GetChild(i);
+            //     //if (child.name == "Armature") {
+            //     if (i == 0) {
+            //         Destroy(child.gameObject);
+            //         break;
+            //     }
+            // }
         }
 
 
