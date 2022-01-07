@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +33,8 @@ public class AttackController : MonoBehaviour {
     public bool TargetInRange { get { return Target != null && SqrDistanceToTarget <= Weapon.SqrRange; } }
     public bool CanAttack { get { return !Owner.Dead && Target != null; } }
 
+    public event Action OnAttack; 
+    
     private void Awake() {
         Owner = GetComponentInParent<Unit>();
         Weapon = GetComponentInChildren<Weapon>();
@@ -54,6 +57,7 @@ public class AttackController : MonoBehaviour {
             return;
         if (Weapon.Reloaded) {
             Weapon.Attack();
+            OnAttack?.Invoke();
             // Owner.Animator.SetTrigger("Attack");
         }
     }

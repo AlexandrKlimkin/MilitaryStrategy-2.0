@@ -55,14 +55,15 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Idle
     animationNameHash: 2081823275
-    totalFrame: 86
+    totalFrame: 66
     fps: 15
     animationIndex: 16
     textureIndex: 0
     rootMotion: 1
-    wrapMode: 0
+    wrapMode: 2
     velocity:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -237,6 +238,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Death
     animationNameHash: 1480695963
     totalFrame: 34
@@ -315,6 +317,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Attack
     animationNameHash: 1080829965
     totalFrame: 43
@@ -411,6 +414,13 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList:
+    - function: PerformHit
+      intParameter: 0
+      floatParameter: 0
+      stringParameter: 
+      objectParameter: 
+      time: 0.3
   - animationName: Skeleton_Damage
     animationNameHash: 2123743354
     totalFrame: 14
@@ -449,6 +459,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Knockback
     animationNameHash: -402851895
     totalFrame: 37
@@ -533,6 +544,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Skill
     animationNameHash: -1610822797
     totalFrame: 19
@@ -581,6 +593,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Stand
     animationNameHash: -1518848078
     totalFrame: 31
@@ -653,6 +666,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []
   - animationName: Skeleton_Walk
     animationNameHash: 765711723
     totalFrame: 27
@@ -717,3 +731,4 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
+    eventList: []

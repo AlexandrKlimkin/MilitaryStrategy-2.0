@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace AnimationInstancing
 {
+    [Serializable]
     public class AnimationEvent
     {
         public string function;

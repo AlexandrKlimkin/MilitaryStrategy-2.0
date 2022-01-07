@@ -8,5 +8,6 @@ namespace CustomAnimator
     {
         public int Id;
         public List<Transition> Transitions;
+        public float ExitTime;
     }
 }

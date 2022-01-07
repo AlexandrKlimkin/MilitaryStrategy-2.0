@@ -10,7 +10,7 @@ namespace CustomAnimator
     {
         public AnimationInstancing.AnimationInstancing AnimationInstancing;
 
-        protected StateMachine _StateMachine;
+        protected AnimatorStateMachine AnimatorStateMachine;
         
         protected virtual void Awake()
         {
@@ -25,27 +25,42 @@ namespace CustomAnimator
 
         protected virtual void Update()
         {
-            _StateMachine?.Update();
+            AnimatorStateMachine?.Update();
         }
 
         protected virtual void OnDestroy()
         {
-            _StateMachine.StateChanged -= OnStateChanged;
+            AnimatorStateMachine.StateChanged -= OnAnimatorStateChanged;
         }
 
         private void InitializeStateMachine()
         {
-            _StateMachine = new StateMachine();
+            AnimatorStateMachine = new AnimatorStateMachine();
             var map = CreateMap();
-            _StateMachine.StateChanged += OnStateChanged;
-            _StateMachine.Initialize(map);
+            AnimatorStateMachine.StateChanged += OnAnimatorStateChanged;
+            AnimatorStateMachine.Initialize(map);
+            AnimatorStateMachine.SetStateReturnCondition(CheckStateExitTime);
         }
 
-        private void OnStateChanged(State state)
+        private void OnAnimatorStateChanged(State state)
         {
             AnimationInstancing.PlayAnimation(state.Id);
         }
         
         protected abstract StateMachineMap CreateMap();
+
+        private bool CheckStateExitTime(State state)
+        {
+            if (state.ExitTime == 0)
+                return false;
+            var normStateTime =
+                AnimationInstancing.curFrame / (AnimationInstancing.aniInfo[state.Id].totalFrame - 1);
+            return normStateTime < state.ExitTime;
+        }
+
+        protected void SetAnimationForce(int id)
+        {
+            AnimatorStateMachine.SetState(id);
+        }
     }
 }
