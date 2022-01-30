@@ -2,6 +2,7 @@
 using UnityEditor;
 
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(IntervalAttribute))]
 public class IntervalDrawer : PropertyDrawer
 {
@@ -38,3 +39,4 @@ public class IntervalDrawer : PropertyDrawer
         }
     }
 }
+#endif

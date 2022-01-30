@@ -34,7 +34,9 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
 
     public bool Dead { get; private set; }
 
-    public Vector3 LookPosition { get { return transform.position; } }
+    public Vector3 LookPosition => transform.position;
+    public Quaternion LookRotation => transform.rotation;
+    public bool UseRotation => false;
 
     protected virtual void Awake() {
         // Animator = GetComponentInChildren<Animator>();

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Reflection;
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ButtonAttribute))]
 public class ButtonDrawer : PropertyDrawer {
 
@@ -23,3 +24,4 @@ public class ButtonDrawer : PropertyDrawer {
         }
     }
 }
+#endif
