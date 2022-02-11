@@ -15,7 +15,7 @@ MonoBehaviour:
   AnimationInfos:
   - animationName: Skeleton_Run
     animationNameHash: 1748754976
-    totalFrame: 16
+    totalFrame: 11
     fps: 15
     animationIndex: 0
     textureIndex: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
     eventList: []
   - animationName: Skeleton_Idle
     animationNameHash: 2081823275
-    totalFrame: 66
+    totalFrame: 60
     fps: 15
     animationIndex: 16
     textureIndex: 0
@@ -423,7 +423,7 @@ MonoBehaviour:
       time: 0.3
   - animationName: Skeleton_Damage
     animationNameHash: 2123743354
-    totalFrame: 14
+    totalFrame: 15
     fps: 15
     animationIndex: 179
     textureIndex: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
     eventList: []
   - animationName: Skeleton_Knockback
     animationNameHash: -402851895
-    totalFrame: 37
+    totalFrame: 40
     fps: 15
     animationIndex: 193
     textureIndex: 0

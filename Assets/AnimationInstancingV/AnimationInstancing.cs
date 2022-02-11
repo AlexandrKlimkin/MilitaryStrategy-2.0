@@ -265,6 +265,7 @@ namespace AnimationInstancing
 			AnimationManager.InstanceAnimationInfo info = AnimationManager.Instance.FindAnimationInfo(prototype, this);
             if (AnimationInfoContainer != null)
             {
+                
                 aniInfo = AnimationInfoContainer.AnimationInfos;
                 Prepare(aniInfo, AnimationInfoContainer.ExtraBoneInfo);
             }
