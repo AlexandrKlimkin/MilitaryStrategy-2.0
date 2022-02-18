@@ -29,6 +29,7 @@ public class CameraBehaviour : SingletonBehaviour<CameraBehaviour> {
 
     public ICameraTarget Target { get; set; }
 
+    
     [SerializeField] private bool _UseStartTarget;
     [SerializeField] private CameraTarget _StartTarget;
     

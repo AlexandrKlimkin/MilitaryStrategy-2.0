@@ -8,8 +8,8 @@ namespace CustomAnimator
     public class AnimatorStateMachine
     {
         public StateMachineMap Map { get; protected set; }
-        
-        public State CurrentState { get; protected set; }
+
+        public State CurrentState { get; protected set; } = new State {Id = -1};
         
         public event Action<State> StateChanged;
 
@@ -23,7 +23,7 @@ namespace CustomAnimator
         
         public virtual void Update()
         {
-            if(CurrentState == null)
+            if(CurrentState.Id == -1)
                 return;
             if(_StateReturnCondition != null && _StateReturnCondition.Invoke(CurrentState))
                 return;

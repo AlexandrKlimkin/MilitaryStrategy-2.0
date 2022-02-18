@@ -1,7 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CustomAnimator;
+using AnimationEvent = CustomAnimator.AnimationEvent;
+
+[Serializable]
+public struct AnimationInfo
+{
+    public int AnimationIndex;
+    public float AnimationSpeed;
+    [Range(0, 1f)]
+    public float ExitTime;
+    public bool UseRootMotion;
+}
 
 public class UnitAnimator : CustomAnimatorBase
 {
@@ -9,14 +21,51 @@ public class UnitAnimator : CustomAnimatorBase
     public MoveController MoveController;
     public AttackController AttackController;
 
-    public int RunAnimationId;
-    public int IdleAnimationId;
-    public int AttackAnimationId;
-    public int HitAnimationId;
-    public int DeathAnimationId;
+    public AnimationInfo RunAnimation;
+    public AnimationInfo IdleAnimation;
+    public AnimationInfo AttackAnimation;
+    public AnimationInfo HitAnimation;
+    public AnimationInfo DeathAnimation;
+
+    [Range(0, 1f)]
+    public float AttackEventTime;
+    [Range(0, 1f)]
+    public float HitEventTime;
+
+    private Transition _RunTransition;
+    private Transition _IdleTransition;
+
+    private List<AnimationEvent> _AttackEvents;
 
     protected override void Start()
     {
+        //Transitions
+        _RunTransition =
+            new Transition()
+            {
+                TransitionStateId = RunAnimation.AnimationIndex,
+                Priority = 0,
+                Condition = (() => MoveController.IsMoving && MoveController.Velocity.sqrMagnitude > 0.01f)
+            };
+        _IdleTransition =
+            new Transition()
+            {
+                TransitionStateId = IdleAnimation.AnimationIndex,
+                Priority = 0,
+                Condition = (() => !MoveController.IsMoving)
+            };
+        
+        //Events
+        _AttackEvents = new List<AnimationEvent>
+        {
+            new AnimationEvent()
+            {
+                Action = AttackController.PerformHit,
+                NormalizedTime = 0.5f,
+                WasThrown = false,
+            }
+        };
+        
         base.Start();
         AttackController.OnAttack += OnAttack;
         Unit.OnDamageTake += OnTakeDamage;
@@ -35,76 +84,35 @@ public class UnitAnimator : CustomAnimatorBase
     {
         var map = new StateMachineMap();
 
-        var idleState = new CustomAnimator.State
-        {
-            Id = IdleAnimationId,
-            Transitions = new List<Transition>()
+        var idleTransitions =
+            new List<Transition>()
             {
-                new Transition()
-                {
-                    TransitionStateId = RunAnimationId,
-                    Priority = 0,
-                    Condition = (() => MoveController.IsMoving)
-                }
-            },
-        };
-        var runState = new CustomAnimator.State
+                _RunTransition,
+            };
+        var idleState =
+            CreateState(IdleAnimation, idleTransitions);
+        
+        var runTransitions = new List<Transition>()
         {
-            Id = RunAnimationId,
-            Transitions = new List<Transition>()
-            {
-                new Transition()
-                {
-                    TransitionStateId = IdleAnimationId,
-                    Priority = 0,
-                    Condition = (() => !MoveController.IsMoving)
-                }
-            }
+            _IdleTransition,
         };
-        var attackState = new CustomAnimator.State
+        var runState = CreateState(RunAnimation, runTransitions);
+        
+        var attackTransitions = new List<Transition>()
         {
-            Id = AttackAnimationId,
-            Transitions = new List<Transition>()
-            {
-                new Transition()
-                {
-                    TransitionStateId = IdleAnimationId,
-                    Priority = 0,
-                    Condition = () => !MoveController.IsMoving,
-                },
-                new Transition()
-                {
-                    TransitionStateId = RunAnimationId,
-                    Priority = 0,
-                    Condition = () => MoveController.IsMoving,
-                }
-            },
-            ExitTime = 1f,
+            _IdleTransition,
+            _RunTransition,
         };
-        var hitState = new CustomAnimator.State
+        var attackState = CreateState(AttackAnimation, attackTransitions, _AttackEvents);
+        
+        var hitTransitions = new List<Transition>()
         {
-            Id = HitAnimationId,
-            Transitions = new List<Transition>()
-            {
-                new Transition()
-                {
-                    TransitionStateId = IdleAnimationId,
-                    Priority = 0,
-                    Condition = () => !MoveController.IsMoving,
-                },
-                new Transition()
-                {
-                    TransitionStateId = RunAnimationId,
-                    Priority = 0,
-                    Condition = () => MoveController.IsMoving,
-                }
-            },
-            ExitTime = 1f,
+            _IdleTransition,
+            _RunTransition,
         };
-        var deathState = new CustomAnimator.State
-        {
-            Id = DeathAnimationId,
-        };
+        var hitState = CreateState(HitAnimation, hitTransitions);
+        
+        var deathState = CreateState(DeathAnimation, null);
 
         map.States = new List<CustomAnimator.State>()
         {
@@ -118,18 +126,32 @@ public class UnitAnimator : CustomAnimatorBase
         return map;
     }
 
+    private CustomAnimator.State CreateState(AnimationInfo info, List<Transition> transitions, List<AnimationEvent> events = null)
+    {
+        var state = new CustomAnimator.State()
+        {
+            Id = info.AnimationIndex,
+            Transitions = transitions,
+            AnimationSpeed = info.AnimationSpeed,
+            ExitTime = info.ExitTime,
+            UseRootMotion = info.UseRootMotion,
+            Events = events,
+        };
+        return state;
+    }
+    
     private void OnAttack()
     {
-        SetAnimationForce(AttackAnimationId);
+        SetAnimationForce(AttackAnimation.AnimationIndex);
     }
 
     private void OnTakeDamage()
     {
-        SetAnimationForce(HitAnimationId);
+        SetAnimationForce(HitAnimation.AnimationIndex);
     }
     
     private void OnDeath()
     {
-        SetAnimationForce(DeathAnimationId);
+        SetAnimationForce(DeathAnimation.AnimationIndex);
     }
 }

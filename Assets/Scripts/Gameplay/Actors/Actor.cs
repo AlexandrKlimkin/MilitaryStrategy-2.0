@@ -32,7 +32,7 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
     public event Action OnDamageTake;
     public event Action OnDeath;
 
-    public bool Dead { get; private set; }
+    public bool Dead;
 
     public Vector3 LookPosition => transform.position;
     public Quaternion LookRotation => transform.rotation;

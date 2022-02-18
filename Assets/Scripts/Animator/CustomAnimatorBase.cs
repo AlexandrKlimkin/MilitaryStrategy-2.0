@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using AnimationInstancing;
 
@@ -23,13 +24,36 @@ namespace CustomAnimator
             InitializeStateMachine();
         }
 
+
         protected virtual void Update()
         {
+            if (AnimatorStateMachine == null)
+                return;
             AnimatorStateMachine?.Update();
+            var curState = AnimatorStateMachine.CurrentState;
+            if (curState.Id == -1)
+                return;
+            if(curState.Events == null)
+                return;
+            if (!curState.Events.Any())
+                return;
+            var normStateTime =
+                AnimationInstancing.curFrame / (AnimationInstancing.aniInfo[curState.Id].totalFrame - 1);
+            foreach (var ev in curState.Events)
+            {
+                if (ev.WasThrown)
+                    continue;
+                if (normStateTime < ev.NormalizedTime)
+                    continue;
+                ev.Action?.Invoke();
+                ev.WasThrown = true;
+                // Debug.LogError("Event was thrown!");
+            }
         }
 
         protected virtual void OnDestroy()
         {
+            if(AnimatorStateMachine != null)
             AnimatorStateMachine.StateChanged -= OnAnimatorStateChanged;
         }
 
@@ -44,7 +68,10 @@ namespace CustomAnimator
 
         private void OnAnimatorStateChanged(State state)
         {
+            state.Events?.ForEach(_=>_.WasThrown = false);
             AnimationInstancing.PlayAnimation(state.Id);
+            AnimationInstancing.playSpeed = state.AnimationSpeed;
+            AnimationInstancing.applyRootMotion = state.UseRootMotion;
         }
         
         protected abstract StateMachineMap CreateMap();
