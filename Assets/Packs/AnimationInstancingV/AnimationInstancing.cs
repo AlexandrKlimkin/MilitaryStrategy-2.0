@@ -59,12 +59,12 @@ namespace AnimationInstancing
         float transitionTimer = 0.0f;
         [NonSerialized]
         public float transitionProgress = 0.0f;
-        private int eventIndex = -1;
+        // private int eventIndex = -1;
 
         public List<AnimationInfo> aniInfo;
         private ComparerHash comparer;
         private AnimationInfo searchInfo;
-        private AnimationEvent aniEvent = null;
+        // private AnimationEvent aniEvent = null;
         public class LodInfo
         {
             public int lodLevel;
@@ -85,7 +85,7 @@ namespace AnimationInstancing
         [NonSerialized]
         private List<AnimationInstancing> listAttachment;
 
-        public bool FireEvents { get; set; } = true;
+        // public bool FireEvents { get; set; } = true;
         
         void Start()
         {
@@ -368,7 +368,7 @@ namespace AnimationInstancing
                 aniIndex = animationIndex;
                 preAniFrame = (float)(int)(curFrame + 0.5f);
                 curFrame = 0.0f;
-                eventIndex = -1;
+                // eventIndex = -1;
                 preAniTextureIndex = aniTextureIndex;
                 aniTextureIndex = aniInfo[aniIndex].textureIndex;
                 wrapMode = aniInfo[aniIndex].wrapMode;
@@ -427,7 +427,7 @@ namespace AnimationInstancing
         {
             aniIndex = -1;
             preAniIndex = -1;
-            eventIndex = -1;
+            // eventIndex = -1;
             curFrame = 0.0f;
         }
 
@@ -521,8 +521,8 @@ namespace AnimationInstancing
                 attachment.transform.position = transform.position;
                 attachment.transform.rotation = transform.rotation;
             }
-            if (FireEvents)
-                UpdateAnimationEvent();
+            // if (FireEvents)
+            //     UpdateAnimationEvent();
         }
 
         public void UpdateLod(Vector3 cameraPosition)
@@ -542,38 +542,38 @@ namespace AnimationInstancing
             }
         }
 
-        private void UpdateAnimationEvent()
-        {
-            AnimationInfo info = GetCurrentAnimationInfo();
-            if (info == null)
-                return;
-            if (info.eventList.Count == 0)
-                return;
-
-            if (aniEvent == null)
-            {
-                float time = curFrame / info.fps;
-                for (int i = eventIndex >= 0? eventIndex: 0; i < info.eventList.Count; ++i)
-                {
-                    if (info.eventList[i].time > time)
-                    {
-                        aniEvent = info.eventList[i];
-                        eventIndex = i;
-                        break;
-                    }
-                }
-            }
-
-            if (aniEvent != null)
-            {
-                float time = curFrame / info.fps;
-                if (aniEvent.time <= time)
-                {
-                    gameObject.SendMessage(aniEvent.function, aniEvent);
-                    aniEvent = null;
-                }
-            }
-        }
+        // private void UpdateAnimationEvent()
+        // {
+        //     AnimationInfo info = GetCurrentAnimationInfo();
+        //     if (info == null)
+        //         return;
+        //     if (info.eventList.Count == 0)
+        //         return;
+        //
+        //     if (aniEvent == null)
+        //     {
+        //         float time = curFrame / info.fps;
+        //         for (int i = eventIndex >= 0? eventIndex: 0; i < info.eventList.Count; ++i)
+        //         {
+        //             if (info.eventList[i].time > time)
+        //             {
+        //                 aniEvent = info.eventList[i];
+        //                 eventIndex = i;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //
+        //     if (aniEvent != null)
+        //     {
+        //         float time = curFrame / info.fps;
+        //         if (aniEvent.time <= time)
+        //         {
+        //             gameObject.SendMessage(aniEvent.function, aniEvent);
+        //             aniEvent = null;
+        //         }
+        //     }
+        // }
 
         private int FindAnimationInfo(int hash)
         {

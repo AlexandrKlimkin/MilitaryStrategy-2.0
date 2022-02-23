@@ -45,14 +45,14 @@ public class UnitAnimator : CustomAnimatorBase
             {
                 TransitionStateId = RunAnimation.AnimationIndex,
                 Priority = 0,
-                Condition = (() => MoveController.IsMoving && MoveController.Velocity.sqrMagnitude > 0.01f)
+                Condition = (() => MoveController.IsMoving && MoveController.Velocity.sqrMagnitude > 0.01f || MoveController.Rigidbody.velocity.sqrMagnitude > 0.01f)
             };
         _IdleTransition =
             new Transition()
             {
                 TransitionStateId = IdleAnimation.AnimationIndex,
                 Priority = 0,
-                Condition = (() => !MoveController.IsMoving)
+                Condition = (() => !MoveController.IsMoving && MoveController.Rigidbody.velocity.sqrMagnitude < 0.01f)
             };
         
         //Events

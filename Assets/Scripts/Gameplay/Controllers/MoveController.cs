@@ -7,6 +7,9 @@ public class MoveController : MonoBehaviour {
 
     public float Speed = 5f;
     public float AngularSpeed = 1080f;
+
+    public float AvoidUnitsCD;
+    
     public Vector3 Velocity { get; private set; }
     public Vector3 RBVelocity => Rigidbody.velocity;
     public bool IsStopped { get; set; }
@@ -25,6 +28,8 @@ public class MoveController : MonoBehaviour {
     public NavMeshPath Path { get; private set; }
 
     private Coroutine _StanRoutine;
+    private float _LastAvoidUnitsTime;
+
 
     public bool CanMove {
         get {
@@ -36,7 +41,7 @@ public class MoveController : MonoBehaviour {
 
     public bool IsMoving =>
         //return _IsMoving;
-        CanMove && !IsStopped;
+        CanMove && !IsStopped && Velocity.sqrMagnitude > 0f;
 
     // public bool _IsMoving;
 
@@ -50,6 +55,7 @@ public class MoveController : MonoBehaviour {
         _TargetRotation = Owner.transform.rotation;
         IsStopped = true;
         Owner.OnDeath += OnOwnerDeath;
+        _LastAvoidUnitsTime = Random.Range(0, AvoidUnitsCD);
         //Owner.Animator.SetFloat("StanTime", MiddleDmgStanTime);
     }
 
@@ -57,8 +63,9 @@ public class MoveController : MonoBehaviour {
         if (Owner.Dead)
             return;
         MoveAlongPath();
+        //AvoidUnits();
         RotateUnit();
-        UpdateAnimator();
+        //UpdateAnimator();
         DrawPath();
     }
 
@@ -94,7 +101,26 @@ public class MoveController : MonoBehaviour {
                 Velocity = Vector3.zero;
             }
         }
-        transform.position += Velocity;
+        Rigidbody.MovePosition(Rigidbody.position + Velocity);
+    }
+
+    private void AvoidUnits()
+    {
+        var raycastPos = transform.position + Vector3.up * 0.5f;
+        var length = 2f;
+        var avoidStrength = 1f;
+        
+        if (Time.time > _LastAvoidUnitsTime + AvoidUnitsCD)
+        {
+            if (Physics.Raycast(raycastPos, transform.forward, out var hit, length,
+                Constants.Layers.Masks.Actor, QueryTriggerInteraction.Ignore))
+            {
+                var dir = hit.collider.transform.position - raycastPos;
+                Velocity = (Velocity + transform.right * avoidStrength).normalized * Speed * Time.deltaTime;
+            }
+            _LastAvoidUnitsTime = Time.time;
+        }
+        Debug.DrawLine(raycastPos, raycastPos + Velocity, Color.green);
     }
 
     private void RotateUnit() {
