@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
 
-    public Animator Animator { get; private set; }
+    //public Animator Animator { get; private set; }
+    public AnimationInstancing.AnimationInstancing AnimationInstancing { get; private set; }
+    
     public virtual float MaxHealth { get { return _MaxHealth; } protected set { _MaxHealth = value; } }
     [SerializeField]
     private float _MaxHealth;
@@ -30,12 +32,14 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
     public event Action OnDamageTake;
     public event Action OnDeath;
 
-    public bool Dead { get; private set; }
+    public bool Dead;
 
-    public Vector3 LookPosition { get { return transform.position; } }
+    public Vector3 LookPosition => transform.position;
+    public Quaternion LookRotation => transform.rotation;
+    public bool UseRotation => false;
 
     protected virtual void Awake() {
-        Animator = GetComponentInChildren<Animator>();
+        // Animator = GetComponentInChildren<Animator>();
         PointToFire = transform.Find("PointToFire");
         if (PointToFire == null) {
             PointToFire = new GameObject("PointToFire").transform;
@@ -59,7 +63,7 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
             Health = 0;
             Die();
         }
-        if (Animator != null) {
+        // if (Animator != null) {
             if (damage.Type == DamageType.Small) {
                 OnSmallDamageTake();
             }
@@ -69,18 +73,18 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
             else if (damage.Type == DamageType.Big) {
                 OnBigDamageTake();
             }
-        }
+        // }
     }
 
     public virtual void Die() {
         Dead = true;
         if (OnDeath != null)
             OnDeath();
-        if (Animator != null)
-        {
-            Animator.SetTrigger("Die");
-            Animator.SetBool("Dead", true);
-        }
+        // if (Animator != null)
+        // {
+        //     Animator.SetTrigger("Die");
+        //     Animator.SetBool("Dead", true);
+        // }
     }
 
     protected virtual void OnSmallDamageTake() {
@@ -96,12 +100,12 @@ public class Actor : MonoBehaviour, IDamagable, ICameraTarget {
             //effect.Play();
         }
         if (!Dead) {
-            Animator.SetTrigger("TakeMiddleDamage");
+            // Animator.SetTrigger("TakeMiddleDamage");
         }
     }
     protected virtual void OnBigDamageTake() {
         if (!Dead) {
-            Animator.SetTrigger("TakeBigDamage");
+            // Animator.SetTrigger("TakeBigDamage");
         }
     }
 

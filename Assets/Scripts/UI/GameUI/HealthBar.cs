@@ -12,12 +12,14 @@ public class HealthBar : MonoBehaviour {
         StartCoroutine(InitializeRoutine());
     }
 
+    //ToDo: remove this shit, make signal subscription
     private IEnumerator InitializeRoutine() {
         _Slider = GetComponent<Slider>();
         yield return new WaitUntil(() => PlayerController.Instance != null);
         yield return new WaitUntil(() => PlayerController.Instance.Unit != null);
         _Player = PlayerController.Instance.Unit;
-        _Player.OnHealthChanged += UpdateBar;
+        if(_Player)
+            _Player.OnHealthChanged += UpdateBar;
         Initialized = true;
     }
 
@@ -26,6 +28,7 @@ public class HealthBar : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        _Player.OnHealthChanged -= UpdateBar;
+        if(_Player)
+            _Player.OnHealthChanged -= UpdateBar;
     }
 }

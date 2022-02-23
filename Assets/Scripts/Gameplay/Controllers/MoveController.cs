@@ -8,6 +8,7 @@ public class MoveController : MonoBehaviour {
     public float Speed = 5f;
     public float AngularSpeed = 1080f;
     public Vector3 Velocity { get; private set; }
+    public Vector3 RBVelocity => Rigidbody.velocity;
     public bool IsStopped { get; set; }
     public Vector3 DestinationPoint { get; private set; }
     private bool _DestinationPointReached;
@@ -17,6 +18,8 @@ public class MoveController : MonoBehaviour {
 
     public float MiddleDmgStanTime = 1.5f;
 
+    public Rigidbody Rigidbody;
+    
     public Unit Owner { get; private set; }
 
     public NavMeshPath Path { get; private set; }
@@ -31,14 +34,15 @@ public class MoveController : MonoBehaviour {
 
     public bool Staned { get; private set; }
 
-    public bool IsMoving {
-        get {
-            return CanMove && !IsStopped && Velocity != Vector3.zero; 
-        }
-    }
+    public bool IsMoving =>
+        //return _IsMoving;
+        CanMove && !IsStopped;
+
+    // public bool _IsMoving;
 
     private void Awake() {
         Owner = GetComponentInParent<Unit>();
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Start() {
@@ -71,7 +75,10 @@ public class MoveController : MonoBehaviour {
 
     private void MoveAlongPath() {
         if (_DestinationPointReached || !CanMove || IsStopped)
+        {
+            Velocity = Vector3.zero;
             return;
+        }
         var direction = _TargetPathPoint - Owner.transform.position;
         var sqrDistToTargetPoint = Vector3.SqrMagnitude(direction);
         if (sqrDistToTargetPoint > 0.1f) {
@@ -87,7 +94,7 @@ public class MoveController : MonoBehaviour {
                 Velocity = Vector3.zero;
             }
         }
-        Owner.transform.position += Velocity;
+        transform.position += Velocity;
     }
 
     private void RotateUnit() {
@@ -101,6 +108,11 @@ public class MoveController : MonoBehaviour {
             return;
         var dir = Vector3.Scale(actor.transform.position - Owner.transform.position, new Vector3(1,0,1));
         ForceLookAt(dir);
+    }
+
+    public void SetToGround()
+    {
+        
     }
 
     public void ForceLookAt(Vector3 direction)
@@ -122,7 +134,7 @@ public class MoveController : MonoBehaviour {
     }
 
     public void UpdateAnimator() {
-        Owner.Animator.SetBool("Moving", IsMoving);
+        // Owner.Animator.SetBool("Moving", IsMoving);
     }
 
     private void OnOwnerDeath() {

@@ -15,6 +15,7 @@ public class InputSystem : SingletonBehaviour<InputSystem> {
     public event Action MoveCameraDown;
     public event Action MoveCameraUp;
 
+
     public event Action<float> MouseScroll;
 
     public RaycastHit CameraRaycastHit {
