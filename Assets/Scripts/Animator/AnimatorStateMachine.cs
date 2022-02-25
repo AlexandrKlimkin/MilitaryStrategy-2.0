@@ -9,7 +9,7 @@ namespace CustomAnimator
     {
         public StateMachineMap Map { get; protected set; }
 
-        public State CurrentState { get; protected set; } = new State {Id = -1};
+        public State CurrentState { get; protected set; } = new State {Id = null};
         
         public event Action<State> StateChanged;
 
@@ -23,7 +23,7 @@ namespace CustomAnimator
         
         public virtual void Update()
         {
-            if(CurrentState.Id == -1)
+            if(string.IsNullOrEmpty(CurrentState.Id))
                 return;
             if(_StateReturnCondition != null && _StateReturnCondition.Invoke(CurrentState))
                 return;
@@ -45,7 +45,7 @@ namespace CustomAnimator
             SetState(highestPriorityTransition.TransitionStateId);
         }
         
-        public virtual void SetState(int id)
+        public virtual void SetState(string id)
         {
             var state = Map?.States?.FirstOrDefault(_ => _.Id == id);
             if(state == null)

@@ -46,7 +46,7 @@ public class MoveController : MonoBehaviour {
     // public bool _IsMoving;
 
     private void Awake() {
-        Owner = GetComponentInParent<Unit>();
+        Owner = GetComponent<Unit>();
         Rigidbody = GetComponent<Rigidbody>();
     }
 

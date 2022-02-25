@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -123,13 +124,21 @@ public class GPUSkinningPlayerMono : MonoBehaviour
     }
 #endif
 
-    private void Start()
+    private void Awake()
     {
         Init();
 #if UNITY_EDITOR
         Update_Editor(0); 
 #endif
     }
+
+//     private void Start()
+//     {
+//         Init();
+// #if UNITY_EDITOR
+//         Update_Editor(0); 
+// #endif
+//     }
 
     private void Update()
     {

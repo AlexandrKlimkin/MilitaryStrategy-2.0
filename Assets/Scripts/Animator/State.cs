@@ -7,7 +7,8 @@ namespace CustomAnimator
 {
     public class State
     {
-        public int Id;
+        // public int Id;
+        public string Id;
         public float AnimationSpeed;
         public bool UseRootMotion;
         public List<Transition> Transitions;

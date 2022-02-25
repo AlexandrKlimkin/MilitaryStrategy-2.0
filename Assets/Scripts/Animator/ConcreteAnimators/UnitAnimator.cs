@@ -8,7 +8,7 @@ using AnimationEvent = CustomAnimator.AnimationEvent;
 [Serializable]
 public struct AnimationInfo
 {
-    public int AnimationIndex;
+    public string AnimationId;
     public float AnimationSpeed;
     [Range(0, 1f)]
     public float ExitTime;
@@ -43,14 +43,14 @@ public class UnitAnimator : CustomAnimatorBase
         _RunTransition =
             new Transition()
             {
-                TransitionStateId = RunAnimation.AnimationIndex,
+                TransitionStateId = RunAnimation.AnimationId,
                 Priority = 0,
                 Condition = (() => MoveController.IsMoving && MoveController.Velocity.sqrMagnitude > 0.01f || MoveController.Rigidbody.velocity.sqrMagnitude > 0.01f)
             };
         _IdleTransition =
             new Transition()
             {
-                TransitionStateId = IdleAnimation.AnimationIndex,
+                TransitionStateId = IdleAnimation.AnimationId,
                 Priority = 0,
                 Condition = (() => !MoveController.IsMoving && MoveController.Rigidbody.velocity.sqrMagnitude < 0.01f)
             };
@@ -130,7 +130,7 @@ public class UnitAnimator : CustomAnimatorBase
     {
         var state = new CustomAnimator.State()
         {
-            Id = info.AnimationIndex,
+            Id = info.AnimationId,
             Transitions = transitions,
             AnimationSpeed = info.AnimationSpeed,
             ExitTime = info.ExitTime,
@@ -142,16 +142,16 @@ public class UnitAnimator : CustomAnimatorBase
     
     private void OnAttack()
     {
-        SetAnimationForce(AttackAnimation.AnimationIndex);
+        SetAnimationForce(AttackAnimation.AnimationId);
     }
 
     private void OnTakeDamage()
     {
-        SetAnimationForce(HitAnimation.AnimationIndex);
+        SetAnimationForce(HitAnimation.AnimationId);
     }
     
     private void OnDeath()
     {
-        SetAnimationForce(DeathAnimation.AnimationIndex);
+        SetAnimationForce(DeathAnimation.AnimationId);
     }
 }

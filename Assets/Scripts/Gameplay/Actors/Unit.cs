@@ -14,8 +14,8 @@ public class Unit : Actor {
 
     protected override void Awake() {
         base.Awake();
-        MoveController = GetComponentInChildren<MoveController>();
-        AttackController = GetComponentInChildren<AttackController>();
+        MoveController = GetComponent<MoveController>();
+        AttackController = GetComponent<AttackController>();
         Rigidbody = GetComponent<Rigidbody>();
         SelectCollider = GetComponentInChildren<SphereCollider>();
         Collider = GetComponent<Collider>();

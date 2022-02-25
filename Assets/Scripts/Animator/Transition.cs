@@ -9,6 +9,6 @@ namespace CustomAnimator
     {
         public Func<bool> Condition;
         public int Priority;
-        public int TransitionStateId;
+        public string TransitionStateId;
     }
 }
