@@ -54,7 +54,8 @@ public class SquadsSpawner : MonoBehaviour
     public bool UseDots;
     [Header("UNIT SETTINGS")] 
     public int TeamIndex;
-
+    [Header("RIGIDBODY SETTINGS")]
+    public bool AutoMass;
 
 
     private Entity _objEntity;
@@ -132,6 +133,7 @@ public class SquadsSpawner : MonoBehaviour
                         units.Add(unit);
 
                         ApplyUnitSettings(unit);
+                        ApplyRigidbodySettings(unit);
                     }
                 }
             }
@@ -181,6 +183,22 @@ public class SquadsSpawner : MonoBehaviour
         unit.TeamIndex = TeamIndex;
     }
 
+    private void ApplyRigidbodySettings(GameObject obj)
+    {
+        if (AutoMass)
+        {
+            var rb = GetComponent<Rigidbody>();
+            var capsule = GetComponent<CapsuleCollider>();
+            if(rb == null)
+                return;
+            if (capsule != null)
+            {
+                var v = 3.14f * (Mathf.Pow((capsule.radius), 2)) * ((4 / 3) * capsule.radius + capsule.height);
+                rb.mass = v;
+            }
+        }
+    }
+    
     public void OnSetCenterOffset()
     {
         offsetX = (Width * widthPadding) / 2f;
