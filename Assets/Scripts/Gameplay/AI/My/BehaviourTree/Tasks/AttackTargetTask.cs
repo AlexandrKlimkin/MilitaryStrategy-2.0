@@ -6,7 +6,8 @@ using UnityEngine;
 public class AttackTargetTask : UnitTask {
 
     public override TaskStatus Run() {
-        if ((Unit.AttackController.Target == null || Unit.AttackController.Target.Dead)) {
+        if ((Unit.AttackController.Target == null || Unit.AttackController.Target.Dead))
+        {
             return TaskStatus.Success;
         }
         var sqrDistToTarget = Unit.AttackController.SqrDistanceToTarget;

@@ -80,6 +80,24 @@ public class MoveController : MonoBehaviour {
         }
     }
 
+    public void StopMoving(float time = 0)
+    {
+        if(!IsMoving)
+            return;
+        if (time <= 0)
+            IsStopped = true;
+        else
+        {
+            StartCoroutine(StopMovingRoutine(time));
+        }
+    }
+
+    private IEnumerator StopMovingRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _DestinationPointReached = true;
+    }
+
     private void MoveAlongPath() {
         if (_DestinationPointReached || !CanMove || IsStopped)
         {

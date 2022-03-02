@@ -7,7 +7,10 @@ public class PursueTargetTask : UnitTask {
 
     public override TaskStatus Run() {
         if (Unit.AttackController.Target == null || Unit.AttackController.Target.Dead)
+        {
+            Unit.MoveController.StopMoving(1f);
             return TaskStatus.Failure;
+        }
         var sqrDistToTarget = Unit.AttackController.SqrDistanceToTarget;
         if (sqrDistToTarget > Unit.AttackController.SqrRange) {
             Unit.AttackController.Target = null;
