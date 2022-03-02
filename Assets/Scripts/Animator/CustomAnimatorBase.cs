@@ -73,8 +73,8 @@ namespace CustomAnimator
         private void OnAnimatorStateChanged(State state)
         {
             state.Events?.ForEach(_=>_.WasThrown = false);
-            GPUSkinningPlayerMono.Player.Play(state.Id);
-            
+            //GPUSkinningPlayerMono.Player.Play(state.Id);
+            GPUSkinningPlayerMono.Player.CrossFade(state.Id, 0.2f);
             // AnimationInstancing.PlayAnimation(state.Id);
             // AnimationInstancing.playSpeed = state.AnimationSpeed;
             // AnimationInstancing.applyRootMotion = state.UseRootMotion;
